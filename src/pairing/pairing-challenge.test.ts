@@ -20,7 +20,7 @@ describe("issuePairingChallenge", () => {
     expect(sent[0]).toContain("ABCD");
   });
 
-  it("does not send a reply when request already exists", async () => {
+  it("sends a reply even when request already exists", async () => {
     const sendPairingReply = vi.fn(async () => {});
 
     const result = await issuePairingChallenge({
@@ -31,8 +31,8 @@ describe("issuePairingChallenge", () => {
       sendPairingReply,
     });
 
-    expect(result).toEqual({ created: false });
-    expect(sendPairingReply).not.toHaveBeenCalled();
+    expect(result).toEqual({ created: false, code: "ABCD" });
+    expect(sendPairingReply).toHaveBeenCalled();
   });
 
   it("supports custom reply text builder", async () => {
