@@ -28,9 +28,6 @@ export async function issuePairingChallenge(
     id: params.senderId,
     meta: params.meta,
   });
-  if (!created) {
-    return { created: false };
-  }
   params.onCreated?.({ code });
   const replyText =
     params.buildReplyText?.({ code, senderIdLine: params.senderIdLine }) ??
