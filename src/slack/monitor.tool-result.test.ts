@@ -559,7 +559,7 @@ describe("monitorSlackProvider tool results", () => {
     expect(sendMock.mock.calls[0]?.[1]).toContain("Pairing code: PAIRCODE");
   });
 
-  it("does not resend pairing code when a request is already pending", async () => {
+  it("resends pairing code even when a request is already pending", async () => {
     setPairingOnlyDirectMessages();
     upsertPairingRequestMock
       .mockResolvedValueOnce({ code: "PAIRCODE", created: true })
@@ -575,7 +575,7 @@ describe("monitorSlackProvider tool results", () => {
 
     await stopSlackMonitor({ controller, run });
 
-    expect(sendMock).toHaveBeenCalledTimes(1);
+    expect(sendMock).toHaveBeenCalledTimes(2);
   });
 
   it("threads top-level replies when replyToMode is all", async () => {

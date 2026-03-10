@@ -41,5 +41,5 @@ export async function issuePairingChallenge(
   } catch (err) {
     params.onReplyError?.(err);
   }
-  return { created: true, code };
+  return { created, code };
 }

@@ -460,7 +460,7 @@ describe("BlueBubbles webhook monitor", () => {
       expect(mockDispatchReplyWithBufferedBlockDispatcher).not.toHaveBeenCalled();
     });
 
-    it("does not resend pairing reply when request already exists", async () => {
+    it("resends pairing reply even when request already exists", async () => {
       mockUpsertPairingRequest.mockResolvedValue({ code: "TESTCODE", created: false });
 
       const account = createMockAccount({
@@ -498,9 +498,9 @@ describe("BlueBubbles webhook monitor", () => {
       await flushAsync();
 
       expect(mockUpsertPairingRequest).toHaveBeenCalled();
-      // Should not send pairing reply since created=false
+      // Should send pairing reply even if created=false
       const { sendMessageBlueBubbles } = await import("./send.js");
-      expect(sendMessageBlueBubbles).not.toHaveBeenCalled();
+      expect(sendMessageBlueBubbles).toHaveBeenCalled();
     });
 
     it("allows all DMs when dmPolicy=open", async () => {

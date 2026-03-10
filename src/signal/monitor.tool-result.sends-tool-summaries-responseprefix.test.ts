@@ -464,7 +464,7 @@ describe("monitorSignalProvider tool results", () => {
     expect(updateLastRouteMock).toHaveBeenCalled();
   });
 
-  it("does not resend pairing code when a request is already pending", async () => {
+  it("resends pairing code even when a request is already pending", async () => {
     setSignalToolResultTestConfig(
       createSignalConfig({ autoStart: false, dmPolicy: "pairing", allowFrom: [] }),
     );
@@ -492,6 +492,6 @@ describe("monitorSignalProvider tool results", () => {
       ],
     });
 
-    expect(sendMock).toHaveBeenCalledTimes(1);
+    expect(sendMock).toHaveBeenCalledTimes(2);
   });
 });
