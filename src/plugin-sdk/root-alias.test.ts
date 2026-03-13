@@ -130,11 +130,15 @@ describe("plugin-sdk root alias", () => {
     expect(rootSdk.__esModule).toBe(true);
   });
 
-  it.skipIf(isWindowsCI)("preserves reflection semantics for lazily resolved exports", { timeout: 240_000 }, () => {
-    expect("resolveControlCommandGate" in rootSdk).toBe(true);
-    const keys = Object.keys(rootSdk);
-    expect(keys).toContain("resolveControlCommandGate");
-    const descriptor = Object.getOwnPropertyDescriptor(rootSdk, "resolveControlCommandGate");
-    expect(descriptor).toBeDefined();
-  });
+  it.skipIf(isWindowsCI)(
+    "preserves reflection semantics for lazily resolved exports",
+    { timeout: 240_000 },
+    () => {
+      expect("resolveControlCommandGate" in rootSdk).toBe(true);
+      const keys = Object.keys(rootSdk);
+      expect(keys).toContain("resolveControlCommandGate");
+      const descriptor = Object.getOwnPropertyDescriptor(rootSdk, "resolveControlCommandGate");
+      expect(descriptor).toBeDefined();
+    },
+  );
 });
