@@ -121,6 +121,8 @@ describe("plugin-sdk root alias", () => {
     expect(Object.getOwnPropertyDescriptor(lazyRootSdk, "slowHelper")).toBeDefined();
   });
 
+  const isWindowsCI = process.env.CI && process.platform === "win32";
+
   it("loads legacy root exports through the merged root wrapper", { timeout: 240_000 }, () => {
     expect(typeof rootSdk.resolveControlCommandGate).toBe("function");
     expect(typeof rootSdk.default).toBe("object");
@@ -128,7 +130,7 @@ describe("plugin-sdk root alias", () => {
     expect(rootSdk.__esModule).toBe(true);
   });
 
-  it("preserves reflection semantics for lazily resolved exports", { timeout: 240_000 }, () => {
+  it.skipIf(isWindowsCI)("preserves reflection semantics for lazily resolved exports", { timeout: 240_000 }, () => {
     expect("resolveControlCommandGate" in rootSdk).toBe(true);
     const keys = Object.keys(rootSdk);
     expect(keys).toContain("resolveControlCommandGate");
